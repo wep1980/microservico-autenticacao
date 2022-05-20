@@ -1,6 +1,7 @@
 package br.com.wepdev.microservicoautenticacao.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,14 +27,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "user")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Usuario implements Serializable, UserDetails {
+public class User implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -73,7 +74,12 @@ public class Usuario implements Serializable, UserDetails {
 	
 	
 	public List<String> getRoles(){
-		return null;
+		List<String> roles = new ArrayList<>();
+		this.permissoes.stream()
+		               .forEach( p -> {
+			                roles.add(p.getDescription()); // Para cada permissão vai ser adicionado sera adicionado a descrição a lista que sera retornada
+		});
+		return roles;
 	}
 
 	
